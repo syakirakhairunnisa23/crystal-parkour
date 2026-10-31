@@ -14,6 +14,7 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 - **Penyimpanan**: LocalStorage (`arcade_leaderboard`, `arcade_last_username`)
 - **Kebijakan Caching**: Zero-Cache (`no-cache, no-store, must-revalidate`)
 - **Deployment**: GitHub Pages (Branch `main`, path `/`)
+- **URL Live**: https://syakirakhairunnisa23.github.io/crystal-parkour/
 - **Konsep**: Kucing kecil menjelajahi pulau terapung untuk mengumpulkan kristal bercahaya. Mekanik: lari, lompat, lompat ganda, hindari duri dan biji pohon yang jatuh. 3 level pendek + layar mulai + layar kemenangan.
 - **Status Saat Ini**: Playable end-to-end (menu → 3 level → kemenangan), leaderboard Top 10 aktif, audio sintetis, partikel, dan layar jeda.
 
@@ -54,10 +55,10 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 ### Phase 5: Publikasi GitHub Pages
 - [x] Inisialisasi git dan branch `main`.
 - [x] Buat repository GitHub publik via GitHub CLI (`gh repo create <repo> --public --source=. --remote=origin --push`). *Wajib berstatus Public agar GitHub Pages gratis dapat aktif.*
-- [ ] Aktifkan GitHub Pages (Metode CLI `gh api` atau manual via Web UI Settings > Pages branch `main` root `/`).
+- [x] Aktifkan GitHub Pages (Metode CLI `gh api` atau manual via Web UI Settings > Pages branch `main` root `/`).
 - [x] Kompatibilitas Google AI Studio: Sediakan snippet perintah terminal siap salin jika proyek dilanjutkan lewat antarmuka web.
-- [ ] Pantau status workflow build di tab Actions (`gh run list`).
-- [ ] Tes live demo (`https://<username>.github.io/<repo>/`) dan pastikan pembaruan langsung tampil tanpa hambatan cache (Zero-Cache test).
+- [x] Pantau status workflow build di tab Actions (`gh run list`).
+- [x] Tes live demo (`https://syakirakhairunnisa23.github.io/crystal-parkour/`) dan pastikan pembaruan langsung tampil tanpa hambatan cache (Zero-Cache test).
 
 ---
 
@@ -71,7 +72,7 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 | **T-03** | Modul Input Username & Leaderboard Top 10 | Phase 2 | `DONE` | AI | LocalStorage CRUD, validasi 1–15 karakter, anti-XSS |
 | **T-04** | Logika Pergerakan, Rintangan & Tabrakan | Phase 3 | `DONE` | AI | 3 level, lompat ganda, duri, biji jatuh, bonus waktu |
 | **T-05** | Efek Suara Synth Web Audio API & Partikel | Phase 4 | `DONE` | AI | Audio sintetis, partikel, screen shake, pause |
-| **T-06** | Deployment GitHub Pages via GitHub CLI (`gh`) | Phase 5 | `IN-PROGRESS` | AI | Publikasi live & verifikasi zero-cache |
+| **T-06** | Deployment GitHub Pages via GitHub CLI (`gh`) | Phase 5 | `DONE` | AI | Live di https://syakirakhairunnisa23.github.io/crystal-parkour/ (build sukses) |
 
 *Status: `TODO` | `IN-PROGRESS` | `DONE`*
 
@@ -81,7 +82,8 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 
 | Versi | Tanggal | Pelaksana | Ringkasan Perubahan | Referensi Commit |
 | :--- | :--- | :--- | :--- | :--- |
-| **v0.3.0** | 2026-10-31 | AI | Perbaikan total `index.html`: struktur duplikat yang menyebabkan `SyntaxError` dibersihkan, input lompat keyboard (Spasi/↑/W) diperbaiki, lompat ganda + coyote time, layar jeda (P/Esc), partikel & screen shake, HUD/kanvas responsif, tombol sentuh berbasis pointer, skor disimpan saat game over & kemenangan tanpa duplikasi run, serta sanitasi leaderboard lebih ketat | `—` |
+| **v0.3.1** | 2026-10-31 | AI | Publikasi repository publik `crystal-parkour`, aktivasi GitHub Pages dari branch `main` root `/`, build sukses, dan verifikasi live site (status `built`, halaman memuat game) | `—` |
+| **v0.3.0** | 2026-10-31 | AI | Perbaikan total `index.html`: struktur duplikat yang menyebabkan `SyntaxError` dibersihkan, input lompat keyboard (Spasi/↑/W) diperbaiki, lompat ganda + coyote time, layar jeda (P/Esc), partikel & screen shake, HUD/kanvas responsif, tombol sentuh berbasis pointer, skor disimpan saat game over & kemenangan tanpa duplikasi run, serta sanitasi leaderboard lebih ketat | `9493795` |
 | **v0.2.2** | 2026-10-24 | AI | Menambahkan panduan alur integrasi khusus Google AI Studio & penegasan repo wajib Public | `07475fb` |
 | **v0.2.1** | 2026-10-24 | AI | Menambahkan panduan detail aktivasi GitHub Pages (CLI gh api & Web UI visual) serta troubleshooting | `3aaf671` |
 | **v0.2.0** | 2026-10-24 | AI | Konfigurasi ulang ke Single Model AI untuk siswa, modularisasi 8 blok kode, dan penyesuaian matriks tugas | `2954bb0` |
