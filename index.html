@@ -31,9 +31,14 @@
   th { background: #ffd700; color: #1a1a2e; }
   tr:nth-child(even) td { background: #2a2a3e; }
   .controls-hint { font-size: 0.75rem; color: #aaa; max-width: 370px; margin-bottom: 0.5rem; line-height: 1.35; }
-  .touch-controls { position: absolute; bottom: 12px; left: 0; right: 0; display: none; justify-content: center; z-index: 5; pointer-events: none; }
+  #gameOverHint:empty { display: none; }
+  .touch-controls { position: absolute; bottom: 10px; left: 0; right: 0; display: none; justify-content: space-between; align-items: flex-end; padding: 0 12px; z-index: 6; pointer-events: none; }
   .touch-controls.active { display: flex; }
-  .touch-btn { pointer-events: auto; width: 62px; height: 62px; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #eee; font-weight: bold; font-size: 0.75rem; touch-action: none; user-select: none; }
+  .touch-group { display: flex; gap: 8px; }
+  .touch-btn { pointer-events: auto; width: 56px; height: 56px; background: rgba(255,255,255,0.16); border: 2px solid rgba(255,255,255,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #eee; font-weight: bold; font-size: 0.9rem; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+  .touch-btn.pressed { background: rgba(255,215,0,0.55); border-color: #ffd700; color: #1a1a2e; }
+  .touch-btn-jump { width: 68px; height: 68px; font-size: 0.68rem; background: rgba(255,215,0,0.28); border-color: rgba(255,215,0,0.75); }
+  #btnPauseHud { pointer-events: auto; padding: 2px 8px; font-size: 0.68rem; font-weight: bold; font-family: inherit; color: #ffd700; background: rgba(26,26,46,0.6); border: 1px solid rgba(255,215,0,0.6); border-radius: 6px; cursor: pointer; }
   .char-grid { display: flex; gap: 6px; justify-content: center; margin: 0.3rem 0; flex-wrap: wrap; }
   .char-card { background: #1a1a2e; border: 2px solid #3a3a5a; border-radius: 10px; padding: 4px; cursor: pointer; color: #eee; font-family: inherit; font-size: 0.72rem; display: flex; flex-direction: column; align-items: center; gap: 0; width: 100px; }
   .char-card canvas { width: 84px; height: 70px; border-radius: 8px; display: block; }
@@ -45,12 +50,12 @@
 <body>
 <div id="gameWrap">
   <canvas id="gameCanvas" width="480" height="320"></canvas>
-  <div id="hud"><div>Level: <span id="hudLevel">1</span>/3</div><div>Kristal: <span id="hudCollected">0</span>/<span id="hudTotal">0</span></div><div>Skor: <span id="hudScore">0</span></div></div>
+  <div id="hud"><div>Level: <span id="hudLevel">1</span>/3</div><div>Kristal: <span id="hudCollected">0</span>/<span id="hudTotal">0</span></div><div>Skor: <span id="hudScore">0</span></div><button id="btnPauseHud" type="button" aria-label="Jeda permainan">JEDA</button></div>
 
   <div id="menuOverlay" class="overlay active"><div class="content">
     <h1>Crystal Parkour</h1>
     <p>Pilih hewan kesayanganmu, kumpulkan kristal di pulau terapung, kalahkan boss penjaga, lalu melompat ke pulau berikutnya!</p>
-    <div class="controls-hint"><b>Kontrol:</b> Panah Kiri/Kanan atau A/D untuk berlari<br>Spasi / Klik / Sentuh untuk lompat (tekan 2x untuk lompat ganda)<br>Injak kepala boss untuk menyerang · P atau Esc untuk jeda</div>
+    <div class="controls-hint"><b>Kontrol:</b> Panah Kiri/Kanan atau A/D untuk berlari<br>Spasi / Klik / Sentuh untuk lompat (tekan 2x untuk lompat ganda)<br>Di HP: tombol ◀ ▶ untuk bergerak, LOMPAT untuk melompat<br>Tombol JEDA di kanan atas · P atau Esc untuk jeda · R untuk ulangi<br>Injak kepala boss untuk menyerang</div>
     <div><button class="btn" id="btnStart">Mulai Bermain</button><button class="btn btn-secondary" id="btnLeaderboard">Papan Peringkat</button><button class="btn btn-secondary" id="btnChangeName">Ganti Nama</button></div>
   </div></div>
 
@@ -72,6 +77,7 @@
     <h2 style="color:#ff6b6b;">KAMU TERTABRAKAN</h2>
     <p id="gameOverMsg">Kucing kecil jatuh atau menyentuh duri. Coba lagi!</p>
     <div id="gameOverScore" style="margin-bottom:0.6rem; font-weight:bold; color:#ffd700;">Skor: 0</div>
+    <p id="gameOverHint" class="controls-hint"></p>
     <div><button class="btn" id="btnRestartLevel">Coba Lagi</button><button class="btn btn-secondary" id="btnToMenu">Kembali ke Menu</button></div>
   </div></div>
 
@@ -100,7 +106,15 @@
     <div style="margin-top:0.5rem;"><button class="btn btn-secondary" id="btnCloseLeaderboard">Tutup</button></div>
   </div></div>
 
-  <div class="touch-controls" id="touchControls"><div class="touch-btn" id="btnJumpTouch">LOMPAT</div></div>
+  <div class="touch-controls" id="touchControls">
+    <div class="touch-group">
+      <div class="touch-btn" id="btnLeftTouch" role="button" aria-label="Bergerak ke kiri">◀</div>
+      <div class="touch-btn" id="btnRightTouch" role="button" aria-label="Bergerak ke kanan">▶</div>
+    </div>
+    <div class="touch-group">
+      <div class="touch-btn touch-btn-jump" id="btnJumpTouch" role="button" aria-label="Lompat">LOMPAT</div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -186,6 +200,7 @@ let spikes = currentLevel.spikes;
 let acorns = currentLevel.acorns;
 let collectibles = currentLevel.collectibles;
 let score = 0;
+let levelEntryScore = 0;
 let collected = 0;
 let levelStartTime = 0;
 let lastTime = 0;
@@ -252,23 +267,44 @@ document.getElementById('btnRestartLevel').addEventListener('click', retryLevel)
 document.getElementById('btnToMenu').addEventListener('click', goToMenu);
 document.getElementById('btnResume').addEventListener('click', togglePause);
 document.getElementById('btnQuitPause').addEventListener('click', goToMenu);
-document.getElementById('btnNextLevel').addEventListener('click', () => {
-  hideOverlay('levelCompleteOverlay');
-  currentLevelIndex++;
-  if (currentLevelIndex >= levels.length) { showWin(); }
-  else { resetLevel(currentLevelIndex); setState(STATE_PLAYING); playSound('jump'); }
-});
+document.getElementById('btnNextLevel').addEventListener('click', goToNextLevel);
 document.getElementById('btnToMenu2').addEventListener('click', goToMenu);
 document.getElementById('btnPlayAgain').addEventListener('click', () => { hideOverlay('winOverlay'); startGame(); });
 document.getElementById('btnToMenu3').addEventListener('click', goToMenu);
 document.getElementById('btnLeaderboard').addEventListener('click', () => { renderLeaderboard(); showOverlay('leaderboardOverlay'); });
 document.getElementById('btnCloseLeaderboard').addEventListener('click', () => hideOverlay('leaderboardOverlay'));
-const btnJumpTouch = document.getElementById('btnJumpTouch');
-btnJumpTouch.addEventListener('pointerdown', e => { e.preventDefault(); handleJumpInput(); });
+document.getElementById('btnJumpTouch').addEventListener('pointerdown', e => { e.preventDefault(); handleJumpInput(); });
+document.getElementById('btnPauseHud').addEventListener('click', () => togglePause());
+
 function handleJumpInput() {
   if (gameState === STATE_PLAYING) playerJump();
   else if (gameState === STATE_MENU) document.getElementById('btnStart').click();
 }
+/* Tombol arah sentuh: ditahan untuk terus bergerak, menulis ke objek keys yang sama dengan keyboard. */
+function bindHoldButton(id, code) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const press = e => {
+    e.preventDefault();
+    keys[code] = true;
+    el.classList.add('pressed');
+    /* Menahan jari di luar tombol tetap dianggap menekan (pointer capture). */
+    if (el.setPointerCapture) { try { el.setPointerCapture(e.pointerId); } catch (err) {} }
+  };
+  const release = e => { if (e) e.preventDefault(); keys[code] = false; el.classList.remove('pressed'); };
+  el.addEventListener('pointerdown', press);
+  el.addEventListener('pointerup', release);
+  el.addEventListener('pointercancel', release);
+  el.addEventListener('pointerleave', release);
+}
+function releaseHeldKeys() {
+  keys['ArrowLeft'] = false;
+  keys['ArrowRight'] = false;
+  document.querySelectorAll('.touch-btn.pressed').forEach(el => el.classList.remove('pressed'));
+}
+bindHoldButton('btnLeftTouch', 'ArrowLeft');
+bindHoldButton('btnRightTouch', 'ArrowRight');
+window.addEventListener('blur', releaseHeldKeys);
 
 /* ============================================================
    4. GAME STATE & ENTITIES
@@ -277,14 +313,16 @@ const player = { x: 30, y: 200, vx: 0, vy: 0, w: PLAYER_W, h: PLAYER_H, onGround
 
 function setState(state) {
   gameState = state;
-  document.getElementById('hud').classList.toggle('active', state === STATE_PLAYING);
-  document.getElementById('touchControls').classList.toggle('active', state === STATE_PLAYING);
-  if (state === STATE_PLAYING) updateHUD();
+  const isPlaying = state === STATE_PLAYING;
+  document.getElementById('hud').classList.toggle('active', isPlaying);
+  document.getElementById('touchControls').classList.toggle('active', isPlaying);
+  if (!isPlaying) releaseHeldKeys();
+  if (isPlaying) updateHUD();
 }
 function startGame() {
   hideOverlay('menuOverlay'); hideOverlay('usernameModal'); hideOverlay('characterOverlay');
   hideOverlay('gameOverOverlay'); hideOverlay('winOverlay');
-  currentLevelIndex = 0; score = 0; collected = 0; runId = 'run_' + Date.now();
+  currentLevelIndex = 0; score = 0; levelEntryScore = 0; collected = 0; runId = 'run_' + Date.now();
   resetLevel(0); setState(STATE_PLAYING); playSound('jump');
 }
 function prepareHazard(a) {
@@ -347,8 +385,24 @@ function restartBoss() {
 }
 function retryLevel() {
   hideOverlay('gameOverOverlay');
-  if (bossActive && boss) { restartBoss(); }
-  else { resetLevel(currentLevelIndex); }
+  if (bossActive && boss) {
+    restartBoss();
+  } else {
+    /* Anti-farm: skor kembali ke kondisi awal pulau, sehingga kristal yang diambil lalu mati tidak bisa ditumpuk tanpa batas. */
+    score = levelEntryScore;
+    resetLevel(currentLevelIndex);
+  }
+  setState(STATE_PLAYING);
+  playSound('jump');
+  updateHUD();
+}
+function goToNextLevel() {
+  hideOverlay('levelCompleteOverlay');
+  currentLevelIndex++;
+  if (currentLevelIndex >= levels.length) { showWin(); return; }
+  /* Skor pulau sebelumnya (termasuk bonus boss) menjadi titik aman untuk pulau berikutnya. */
+  levelEntryScore = score;
+  resetLevel(currentLevelIndex);
   setState(STATE_PLAYING);
   playSound('jump');
 }
@@ -358,7 +412,7 @@ function togglePause() {
 }
 function goToMenu() {
   ['gameOverOverlay', 'levelCompleteOverlay', 'winOverlay', 'pauseOverlay', 'leaderboardOverlay', 'usernameModal', 'characterOverlay'].forEach(hideOverlay);
-  currentLevelIndex = 0; score = 0; collected = 0; currentLevel = levels[0];
+  currentLevelIndex = 0; score = 0; levelEntryScore = 0; collected = 0; currentLevel = levels[0];
   platforms = currentLevel.platforms; spikes = currentLevel.spikes; acorns = currentLevel.acorns; collectibles = currentLevel.collectibles;
   bossActive = false; boss = null; projectiles = []; bossIntro = 0;
   player.dead = false; player.vx = 0; player.vy = 0;
@@ -537,6 +591,9 @@ function killPlayer() {
   document.getElementById('gameOverMsg').textContent = rank
     ? 'Skor kamu masuk peringkat #' + rank + '!'
     : (bossActive ? 'Boss berhasil mengalahkanmu. Injak kepalanya untuk menyerang!' : 'Hewanmu jatuh atau menyentuh duri. Coba lagi!');
+  document.getElementById('gameOverHint').textContent = bossActive
+    ? 'Boss tetap menunggu — tekan R atau Coba Lagi untuk mengulang pertarungan.'
+    : (score > levelEntryScore ? 'Skor pulau ini dikembalikan ke ' + levelEntryScore + ' saat Coba Lagi, jadi kristal tidak bisa ditumpuk.' : '');
   setTimeout(() => { if (gameState === STATE_GAMEOVER) showOverlay('gameOverOverlay'); }, 450);
 }
 function showWin() {
