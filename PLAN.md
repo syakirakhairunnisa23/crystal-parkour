@@ -17,7 +17,7 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 - **URL Live**: https://syakirakhairunnisa23.github.io/crystal-parkour/
 - **Karakter**: 3 hewan pilihan dengan statistik dan dunia berbeda — Kucing Oren (seimbang/padang rumput), Kelinci Salju (lompat tinggi/hutan sakura), Rubah Api (lari cepat/senja).
 - **Konsep**: Hewan pilihan pemain menjelajahi pulau terapung untuk mengumpulkan kristal. Setelah kristal terkumpul, boss penjaga muncul dan wajib dikalahkan sebelum ke pulau berikutnya. Mekanik: lari, lompat, lompat ganda, hindari duri dan biji pohon yang jatuh dengan peringatan.
-- **Status Saat Ini**: Playable end-to-end (menu -> pilih karakter -> 3 pulau + 3 boss -> kemenangan), leaderboard Top 10 aktif, audio sintetis, partikel, layar jeda, kontrol sentuh ◀ ▶ untuk HP, tombol JEDA di HUD, dan skor anti-farm (checkpoint per pulau).
+- **Status Saat Ini**: Playable end-to-end (menu -> pilih karakter -> 3 pulau + 3 boss -> kemenangan), leaderboard Top 10 aktif, audio sintetis dengan pengaturan mute/volume, partikel, layar jeda, kontrol sentuh ◀ ▶ untuk HP, tombol JEDA di HUD, skor anti-farm (checkpoint per pulau), rekor terbaik di menu, dan 5 lencana prestasi.
 
 ---
 
@@ -42,6 +42,7 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 - [x] Simpan dan baca username terakhir dari `arcade_last_username`.
 - [x] Buat fungsi penyimpanan dan penyortiran Top 10 skor di `arcade_leaderboard`.
 - [x] Buat tampilan antarmuka (UI) tabel peringkat skor di menu game.
+- [x] Tampilkan rekor skor terbaik (nama + skor, format `id-ID`) di menu utama.
 
 ### Phase 3: Mekanik Inti Permainan (Core Gameplay)
 - [x] Sistem status game (`MENU`, `PLAYING`, `PAUSED`, `GAMEOVER`, `LEVELCOMPLETE`, `WIN`).
@@ -52,6 +53,7 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 - [x] Penyesuaian platform dengan jangkauan lompat tiap karakter (gap maksimal 80 px, tanjakan maksimal 80 px; terverifikasi uji otomatis).
 - [x] Hujan biji pohon diberi peringatan (marker segitiga + garis putus-putus) sebelum jatuh, dengan jeda dan kecepatan yang meningkat per level.
 - [x] Anti-farm skor: skor tiap pulau di-checkpoint (`levelEntryScore`) dan dikembalikan saat "Coba Lagi", sehingga kristal tidak bisa ditumpuk dengan sengaja mati.
+- [x] Pulau Awal dijadikan tutorial tanpa duri (duri mulai Pulau 2) agar pemain baru tidak langsung mati 65 px dari titik spawn.
 
 ### Phase 4: Efek Suara & Visual Juice
 - [x] Efek suara arcade sintetis dengan Web Audio API (lompat, lompat ganda, kristal, tabrakan, injak boss, level selesai, game over).
@@ -61,6 +63,8 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 - [x] Latar belakang dinamis per karakter: padang rumput berawan (Kucing), hutan sakura berkelopak (Kelinci), senja dengan bara api (Rubah), termasuk warna platform yang serasi.
 - [x] Layar pemilihan karakter dengan pratinjau karakter dan statistik.
 - [x] Kontrol sentuh ◀ ▶ (tahan untuk bergerak, dengan pointer capture) + tombol LOMPAT besar, serta tombol JEDA di HUD yang berfungsi di desktop maupun HP.
+- [x] Pengaturan suara: master gain Web Audio, tombol mute, slider volume, pintasan M, dan persistensi di `arcade_settings`.
+- [x] 5 lencana prestasi (Penakluk Pulau Awal, Pulau Sempurna, Kilat, Juara, Kolektor Poin) dengan toast saat terbuka dan disimpan di `arcade_achievements`.
 
 ### Phase 5: Publikasi GitHub Pages
 - [x] Inisialisasi git dan branch `main`.
@@ -88,6 +92,10 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 | **T-09** | Penyesuaian Platform & Hujan Rintangan | Phase 3 | `DONE` | AI | Gap/tinggi teruji; hazard diberi warning marker & skala per level |
 | **T-10** | Kontrol Sentuh ◀ ▶ & Tombol Jeda In-Game | Phase 4 | `DONE` | AI | Pointer hold + pointer capture; tombol dilepas otomatis saat pause/mati |
 | **T-11** | Anti-Farm Skor & Checkpoint Skor per Pulau | Phase 3 | `DONE` | AI | `levelEntryScore`; retry pulau mengembalikan skor, retry boss tetap membawa skor |
+| **T-12** | Pengaturan Suara (Mute + Volume) | Phase 4 | `DONE` | AI | Master gain Web Audio, tombol + slider, pintasan M, `arcade_settings` |
+| **T-13** | Rekor Terbaik di Menu Utama | Phase 2 | `DONE` | AI | Dibaca dari Top 10, format angka `id-ID` |
+| **T-14** | Lencana Prestasi & Toast | Phase 4 | `DONE` | AI | 5 lencana, overlay daftar, `arcade_achievements` |
+| **T-15** | Tuning Pulau Awal & HUD Init | Phase 3 | `DONE` | AI | Duri dekat spawn dihapus; HUD terisi 0/4 saat init |
 
 *Status: `TODO` | `IN-PROGRESS` | `DONE`*
 
@@ -97,6 +105,7 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 
 | Versi | Tanggal | Pelaksana | Ringkasan Perubahan | Referensi Commit |
 | :--- | :--- | :--- | :--- | :--- |
+| **v0.6.0** | 2026-11-07 | AI | Menambahkan pengaturan suara (mute + slider volume, tersimpan di `arcade_settings`), rekor terbaik di menu utama, dan 5 lencana prestasi dengan toast saat terbuka (`arcade_achievements`); Pulau Awal dibuat tanpa duri dekat spawn, HUD terisi saat init, serta tata letak menu dipadatkan agar tidak terpotong (diverifikasi via screenshot headless) | `8fec671` |
 | **v0.5.0** | 2026-11-07 | AI | Menambahkan tombol arah sentuh ◀ ▶ (tahan untuk bergerak) dan tombol LOMPAT yang dirapikan, tombol JEDA di HUD untuk desktop & HP, serta menutup celah farm skor dengan checkpoint skor per pulau (`levelEntryScore`) agar kristal tidak bisa ditumpuk lewat "Coba Lagi"; pesan game over kini menjelaskan pengembalian skor | `db125cd` |
 | **v0.4.1** | 2026-11-07 | AI | Perbaikan encoding `PLAN.md` ke UTF-8 dan penambahan `.nojekyll` agar build GitHub Pages tidak lagi diproses Jekyll; deploy diverifikasi cocok dengan file lokal | `c605073` |
 | **v0.4.0** | 2026-11-07 | AI | Menambahkan 3 karakter hewan pilihan (Kucing/Kelinci/Rubah) dengan statistik & tema latar berbeda, layar pemilihan karakter berpratinjau, boss penjaga di akhir setiap pulau (HP bar, lompatan, proyektil, injak kepala, retry boss), penataan ulang platform sesuai jangkauan lompat, serta peringatan visual sebelum biji pohon jatuh dengan kesulitan bertingkat | `e002f26` |
