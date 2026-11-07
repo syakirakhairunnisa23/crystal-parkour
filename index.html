@@ -12,14 +12,14 @@
   body { background: #1a1a2e; color: #eee; font-family: 'Segoe UI', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; }
   #gameWrap { position: relative; width: min(480px, 100vw); aspect-ratio: 3 / 2; max-height: 100vh; border-radius: 8px; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
   #gameCanvas { display: block; width: 100%; height: 100%; background: #87ceeb; border-radius: 8px; }
-  .overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.78); display: none; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; z-index: 10; text-align: center; padding: 10px; }
+  .overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.78); display: none; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; z-index: 10; text-align: center; padding: 8px; }
   .overlay.active { display: flex; }
-  .content { background: rgba(42,42,62,0.95); padding: 10px 14px; border-radius: 12px; border: 2px solid #ffd700; max-width: 100%; max-height: 100%; overflow-y: auto; }
+  .content { background: rgba(42,42,62,0.95); padding: 8px 12px; border-radius: 12px; border: 2px solid #ffd700; max-width: 100%; max-height: 100%; overflow-y: auto; }
   #usernameModal .content { background: #2a2a3e; border-color: #00ffcc; max-width: 320px; }
-  h1 { font-size: 1.65rem; margin-bottom: 0.35rem; color: #ffd700; text-shadow: 2px 2px #000; }
+  h1 { font-size: 1.5rem; margin-bottom: 0.2rem; color: #ffd700; text-shadow: 2px 2px #000; }
   h2 { font-size: 1.2rem; margin-bottom: 0.3rem; color: #00ffcc; text-shadow: 2px 2px #000; }
-  p { margin-bottom: 0.5rem; font-size: 0.8rem; max-width: 370px; }
-  .btn { padding: 8px 16px; font-size: 0.85rem; background: #ffd700; color: #1a1a2e; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin: 3px; font-family: inherit; }
+  p { margin-bottom: 0.4rem; font-size: 0.8rem; max-width: 370px; }
+  .btn { padding: 7px 14px; font-size: 0.85rem; background: #ffd700; color: #1a1a2e; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin: 2px; font-family: inherit; }
   .btn:hover { box-shadow: 0 4px 12px rgba(255,215,0,0.5); }
   .btn-secondary { background: #4a4a6a; color: #eee; }
   #usernameModal input { padding: 9px; font-size: 0.95rem; width: 85%; margin-bottom: 0.6rem; border-radius: 4px; border: 1px solid #444; background: #1a1a2e; color: #eee; }
@@ -39,6 +39,18 @@
   .touch-btn.pressed { background: rgba(255,215,0,0.55); border-color: #ffd700; color: #1a1a2e; }
   .touch-btn-jump { width: 68px; height: 68px; font-size: 0.68rem; background: rgba(255,215,0,0.28); border-color: rgba(255,215,0,0.75); }
   #btnPauseHud { pointer-events: auto; padding: 2px 8px; font-size: 0.68rem; font-weight: bold; font-family: inherit; color: #ffd700; background: rgba(26,26,46,0.6); border: 1px solid rgba(255,215,0,0.6); border-radius: 6px; cursor: pointer; }
+  .best-score { color: #ffd700; font-size: 0.75rem; font-weight: bold; margin-bottom: 0.25rem; }
+  .audio-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 2px; }
+  .audio-row .btn { padding: 5px 10px; font-size: 0.7rem; margin: 0; }
+  .audio-row input[type="range"] { width: 90px; accent-color: #ffd700; }
+  .badge-list { text-align: left; max-width: 330px; margin: 0 auto; }
+  .badge-row { display: flex; gap: 8px; align-items: center; background: #1a1a2e; border: 1px solid #3a3a5a; border-radius: 8px; padding: 4px 8px; margin: 3px 0; opacity: 0.6; }
+  .badge-row.unlocked { opacity: 1; border-color: #ffd700; box-shadow: 0 0 8px rgba(255,215,0,0.25); }
+  .badge-icon { font-size: 1.05rem; width: 24px; text-align: center; flex: 0 0 auto; }
+  .badge-info { font-size: 0.7rem; line-height: 1.2; }
+  .badge-info small { color: #aaa; font-size: 0.62rem; }
+  .toast { position: absolute; left: 50%; bottom: 86px; transform: translateX(-50%) translateY(10px); background: rgba(26,26,46,0.95); border: 2px solid #ffd700; color: #ffd700; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 9; max-width: 90%; text-align: center; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   .char-grid { display: flex; gap: 6px; justify-content: center; margin: 0.3rem 0; flex-wrap: wrap; }
   .char-card { background: #1a1a2e; border: 2px solid #3a3a5a; border-radius: 10px; padding: 4px; cursor: pointer; color: #eee; font-family: inherit; font-size: 0.72rem; display: flex; flex-direction: column; align-items: center; gap: 0; width: 100px; }
   .char-card canvas { width: 84px; height: 70px; border-radius: 8px; display: block; }
@@ -55,8 +67,18 @@
   <div id="menuOverlay" class="overlay active"><div class="content">
     <h1>Crystal Parkour</h1>
     <p>Pilih hewan kesayanganmu, kumpulkan kristal di pulau terapung, kalahkan boss penjaga, lalu melompat ke pulau berikutnya!</p>
-    <div class="controls-hint"><b>Kontrol:</b> Panah Kiri/Kanan atau A/D untuk berlari<br>Spasi / Klik / Sentuh untuk lompat (tekan 2x untuk lompat ganda)<br>Di HP: tombol ◀ ▶ untuk bergerak, LOMPAT untuk melompat<br>Tombol JEDA di kanan atas · P atau Esc untuk jeda · R untuk ulangi<br>Injak kepala boss untuk menyerang</div>
-    <div><button class="btn" id="btnStart">Mulai Bermain</button><button class="btn btn-secondary" id="btnLeaderboard">Papan Peringkat</button><button class="btn btn-secondary" id="btnChangeName">Ganti Nama</button></div>
+    <p id="bestScoreLine" class="best-score">🏅 Belum ada rekor. Jadilah yang pertama!</p>
+    <div class="controls-hint"><b>Kontrol:</b> Panah/A-D · Spasi/Klik untuk lompat (2x = lompat ganda)<br>Di HP: tombol ◀ ▶ + LOMPAT · JEDA: kanan atas / P / Esc<br>R ulangi · Kumpulkan kristal · Injak kepala boss untuk menyerang</div>
+    <div><button class="btn" id="btnStart">Mulai Bermain</button></div>
+    <div>
+      <button class="btn btn-secondary" id="btnLeaderboard">Papan Peringkat</button>
+      <button class="btn btn-secondary" id="btnAchievements">Lencana (0/5)</button>
+      <button class="btn btn-secondary" id="btnChangeName">Ganti Nama</button>
+    </div>
+    <div class="audio-row">
+      <button class="btn btn-secondary" id="btnSound">🔊 Suara: ON</button>
+      <input type="range" id="volumeSlider" min="0" max="100" value="60" aria-label="Volume suara">
+    </div>
   </div></div>
 
   <div id="usernameModal" class="overlay"><div class="content">
@@ -106,6 +128,13 @@
     <div style="margin-top:0.5rem;"><button class="btn btn-secondary" id="btnCloseLeaderboard">Tutup</button></div>
   </div></div>
 
+  <div id="achievementsOverlay" class="overlay"><div class="content">
+    <h2 style="color:#ffd700;">LENCANA</h2>
+    <p id="achievementSummary" style="color:#aaa;">0/5 lencana terbuka</p>
+    <div id="achievementList" class="badge-list"></div>
+    <div style="margin-top:0.5rem;"><button class="btn btn-secondary" id="btnCloseAchievements">Tutup</button></div>
+  </div></div>
+
   <div class="touch-controls" id="touchControls">
     <div class="touch-group">
       <div class="touch-btn" id="btnLeftTouch" role="button" aria-label="Bergerak ke kiri">◀</div>
@@ -115,6 +144,7 @@
       <div class="touch-btn touch-btn-jump" id="btnJumpTouch" role="button" aria-label="Lompat">LOMPAT</div>
     </div>
   </div>
+  <div class="toast" id="toast"></div>
 </div>
 
 <script>
@@ -173,7 +203,7 @@ const levels = [
     name: "Pulau Awal", goalCollected: 4, hazardWarnMin: 1200, hazardWarnMax: 2400,
     platforms: [{x:0,y:250,w:120,h:70},{x:170,y:230,w:90,h:50},{x:300,y:205,w:90,h:50},{x:420,y:185,w:60,h:50}],
     collectibles: [{x:65,y:210,r:8},{x:215,y:188,r:8},{x:345,y:163,r:8},{x:450,y:143,r:8}],
-    spikes: [{x:85,y:226,w:28,h:24}],
+    spikes: [],
     acorns: [{x:210}]
   },
   {
@@ -210,6 +240,8 @@ let afterNameAction = 'none';
 let bossActive = false;
 let boss = null;
 let bossIntro = 0;
+let bossStartTime = 0;
+let deathsThisLevel = 0;
 let projectiles = [];
 const keys = {};
 let playerName = localStorage.getItem('arcade_last_username') || '';
@@ -217,15 +249,46 @@ let playerName = localStorage.getItem('arcade_last_username') || '';
 /* ============================================================
    2. AUDIO SYNTHESIS (Web Audio API)
    ============================================================ */
+let settings = { muted: false, volume: 0.6 };
+try {
+  const savedSettings = JSON.parse(localStorage.getItem('arcade_settings') || '{}');
+  if (savedSettings && typeof savedSettings === 'object') {
+    settings.muted = !!savedSettings.muted;
+    if (typeof savedSettings.volume === 'number' && savedSettings.volume >= 0 && savedSettings.volume <= 1) settings.volume = savedSettings.volume;
+  }
+} catch (e) {}
+
 let audioCtx = null;
-function ensureAudio() { if (!audioCtx) { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } }
+let masterGain = null;
+function ensureAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = settings.muted ? 0 : settings.volume;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+function applyAudioSettings() {
+  if (masterGain) masterGain.gain.value = settings.muted ? 0 : settings.volume;
+  const btn = document.getElementById('btnSound');
+  if (btn) btn.textContent = settings.muted ? '🔇 Suara: OFF' : '🔊 Suara: ON';
+  const slider = document.getElementById('volumeSlider');
+  if (slider && document.activeElement !== slider) slider.value = Math.round(settings.volume * 100);
+}
+function toggleMute() {
+  settings.muted = !settings.muted;
+  saveSettings();
+  applyAudioSettings();
+  if (!settings.muted) playSound('collect');
+}
 function playSound(type) {
+  if (settings.muted) return;
   try {
     ensureAudio();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.connect(gain); gain.connect(masterGain);
     const now = audioCtx.currentTime;
     if (type === 'jump') { osc.type = 'sine'; osc.frequency.setValueAtTime(220, now); osc.frequency.exponentialRampToValueAtTime(440, now + 0.1); gain.gain.setValueAtTime(0.15, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15); osc.start(now); osc.stop(now + 0.15); }
     else if (type === 'doubleJump') { osc.type = 'square'; osc.frequency.setValueAtTime(330, now); osc.frequency.exponentialRampToValueAtTime(660, now + 0.1); gain.gain.setValueAtTime(0.12, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15); osc.start(now); osc.stop(now + 0.15); }
@@ -250,6 +313,7 @@ window.addEventListener('keydown', e => {
     else if (gameState === STATE_PAUSED) togglePause();
   }
   if (e.code === 'KeyP' || e.code === 'Escape') togglePause();
+  if (e.code === 'KeyM') toggleMute();
   if (e.code === 'KeyR' && (gameState === STATE_PLAYING || gameState === STATE_GAMEOVER)) retryLevel();
 });
 window.addEventListener('keyup', e => { keys[e.code] = false; });
@@ -273,6 +337,15 @@ document.getElementById('btnPlayAgain').addEventListener('click', () => { hideOv
 document.getElementById('btnToMenu3').addEventListener('click', goToMenu);
 document.getElementById('btnLeaderboard').addEventListener('click', () => { renderLeaderboard(); showOverlay('leaderboardOverlay'); });
 document.getElementById('btnCloseLeaderboard').addEventListener('click', () => hideOverlay('leaderboardOverlay'));
+document.getElementById('btnAchievements').addEventListener('click', () => { renderAchievements(); showOverlay('achievementsOverlay'); });
+document.getElementById('btnCloseAchievements').addEventListener('click', () => hideOverlay('achievementsOverlay'));
+document.getElementById('btnSound').addEventListener('click', toggleMute);
+document.getElementById('volumeSlider').addEventListener('input', e => {
+  settings.volume = Math.max(0, Math.min(1, Number(e.target.value) / 100));
+  if (settings.volume > 0) settings.muted = false;
+  saveSettings();
+  applyAudioSettings();
+});
 document.getElementById('btnJumpTouch').addEventListener('pointerdown', e => { e.preventDefault(); handleJumpInput(); });
 document.getElementById('btnPauseHud').addEventListener('click', () => togglePause());
 
@@ -322,7 +395,7 @@ function setState(state) {
 function startGame() {
   hideOverlay('menuOverlay'); hideOverlay('usernameModal'); hideOverlay('characterOverlay');
   hideOverlay('gameOverOverlay'); hideOverlay('winOverlay');
-  currentLevelIndex = 0; score = 0; levelEntryScore = 0; collected = 0; runId = 'run_' + Date.now();
+  currentLevelIndex = 0; score = 0; levelEntryScore = 0; collected = 0; deathsThisLevel = 0; bossStartTime = 0; runId = 'run_' + Date.now();
   resetLevel(0); setState(STATE_PLAYING); playSound('jump');
 }
 function prepareHazard(a) {
@@ -346,7 +419,7 @@ function resetLevel(index) {
 }
 function startBossFight() {
   if (bossActive) return;
-  bossActive = true; projectiles = []; bossIntro = 1200;
+  bossActive = true; projectiles = []; bossIntro = 1200; bossStartTime = performance.now();
   platforms = BOSS_ARENA; spikes = []; acorns = []; collectibles = [];
   player.x = 40; player.y = 260 - player.h - 2; player.vx = 0; player.vy = 0;
   player.jumpCount = 0; player.coyote = 0; player.onGround = true; player.dead = false;
@@ -379,7 +452,7 @@ function restartBoss() {
   const data = BOSS_DATA[currentLevelIndex] || BOSS_DATA[0];
   boss.hp = data.hp; boss.x = 300; boss.y = 204; boss.vx = 0; boss.vy = 0;
   boss.hopTimer = 1400; boss.shootTimer = 1700; boss.hitFlash = 0;
-  projectiles = []; bossIntro = 600;
+  projectiles = []; bossIntro = 600; bossStartTime = performance.now();
   player.x = 40; player.y = 260 - player.h - 2; player.vx = 0; player.vy = 0;
   player.jumpCount = 0; player.coyote = 0; player.onGround = true; player.dead = false; player.facingRight = true;
 }
@@ -402,6 +475,7 @@ function goToNextLevel() {
   if (currentLevelIndex >= levels.length) { showWin(); return; }
   /* Skor pulau sebelumnya (termasuk bonus boss) menjadi titik aman untuk pulau berikutnya. */
   levelEntryScore = score;
+  deathsThisLevel = 0;
   resetLevel(currentLevelIndex);
   setState(STATE_PLAYING);
   playSound('jump');
@@ -411,14 +485,15 @@ function togglePause() {
   else if (gameState === STATE_PAUSED) { hideOverlay('pauseOverlay'); setState(STATE_PLAYING); lastTime = 0; }
 }
 function goToMenu() {
-  ['gameOverOverlay', 'levelCompleteOverlay', 'winOverlay', 'pauseOverlay', 'leaderboardOverlay', 'usernameModal', 'characterOverlay'].forEach(hideOverlay);
+  ['gameOverOverlay', 'levelCompleteOverlay', 'winOverlay', 'pauseOverlay', 'leaderboardOverlay', 'achievementsOverlay', 'usernameModal', 'characterOverlay'].forEach(hideOverlay);
   currentLevelIndex = 0; score = 0; levelEntryScore = 0; collected = 0; currentLevel = levels[0];
   platforms = currentLevel.platforms; spikes = currentLevel.spikes; acorns = currentLevel.acorns; collectibles = currentLevel.collectibles;
-  bossActive = false; boss = null; projectiles = []; bossIntro = 0;
+  bossActive = false; boss = null; projectiles = []; bossIntro = 0; bossStartTime = 0; deathsThisLevel = 0;
   player.dead = false; player.vx = 0; player.vy = 0;
   setState(STATE_MENU);
   showOverlay('menuOverlay');
   updateHUD();
+  updateMenuInfo();
 }
 
 /* ============================================================
@@ -571,6 +646,11 @@ function defeatBoss() {
   const elapsed = performance.now() - levelStartTime;
   const timeBonus = Math.max(0, Math.floor((15000 - elapsed) / 100));
   score += timeBonus;
+  const bossElapsed = bossStartTime ? performance.now() - bossStartTime : Infinity;
+  if (currentLevelIndex === 0) unlockAchievement('boss1');
+  if (deathsThisLevel === 0) unlockAchievement('perfect');
+  if (bossElapsed <= 20000) unlockAchievement('speed');
+  if (score >= 1500) unlockAchievement('score1500');
   setState(STATE_LEVELCOMPLETE);
   updateHUD();
   document.getElementById('levelCompleteMsg').textContent = 'Boss ' + b.name + ' dikalahkan! Bonus waktu: +' + timeBonus;
@@ -587,6 +667,8 @@ function killPlayer() {
   setTimeout(() => playSound('gameOver'), 300);
   let rank = null;
   if (playerName && score > 0) rank = saveScore(playerName, score);
+  deathsThisLevel++;
+  if (score >= 1500) unlockAchievement('score1500');
   document.getElementById('gameOverScore').textContent = 'Skor: ' + score;
   document.getElementById('gameOverMsg').textContent = rank
     ? 'Skor kamu masuk peringkat #' + rank + '!'
@@ -599,6 +681,8 @@ function killPlayer() {
 function showWin() {
   setState(STATE_WIN);
   playSound('levelComplete');
+  unlockAchievement('champion');
+  if (score >= 1500) unlockAchievement('score1500');
   let rank = null;
   if (playerName && score > 0) rank = saveScore(playerName, score);
   document.getElementById('winScore').textContent = 'Skor Akhir: ' + score + (rank ? ' — Peringkat #' + rank : '');
@@ -651,6 +735,79 @@ function renderLeaderboard() {
     });
     tbody.appendChild(tr);
   });
+}
+function saveSettings() {
+  try { localStorage.setItem('arcade_settings', JSON.stringify(settings)); } catch (e) {}
+}
+const ACHIEVEMENTS = {
+  boss1: { icon: '👑', name: 'Penakluk Pulau Awal', desc: 'Kalahkan Raja Duri di Pulau Awal.' },
+  perfect: { icon: '💎', name: 'Pulau Sempurna', desc: 'Selesaikan satu pulau tanpa pernah mati.' },
+  speed: { icon: '⚡', name: 'Kilat', desc: 'Kalahkan boss dalam 20 detik.' },
+  champion: { icon: '🏆', name: 'Juara Crystal Parkour', desc: 'Tamatkan ketiga pulau.' },
+  score1500: { icon: '⭐', name: 'Kolektor Poin', desc: 'Capai skor 1.500 dalam satu percobaan.' }
+};
+function loadAchievements() {
+  try {
+    const raw = JSON.parse(localStorage.getItem('arcade_achievements') || '[]');
+    return Array.isArray(raw) ? raw.filter(id => ACHIEVEMENTS[id]) : [];
+  } catch (e) { return []; }
+}
+let toastTimer = 0;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+}
+function unlockAchievement(id) {
+  const achievement = ACHIEVEMENTS[id];
+  if (!achievement) return;
+  const unlocked = loadAchievements();
+  if (unlocked.includes(id)) return;
+  unlocked.push(id);
+  try { localStorage.setItem('arcade_achievements', JSON.stringify(unlocked)); } catch (e) {}
+  showToast('Lencana terbuka: ' + achievement.name);
+  playSound('collect');
+  updateMenuInfo();
+}
+function renderAchievements() {
+  const unlocked = loadAchievements();
+  const list = document.getElementById('achievementList');
+  list.innerHTML = '';
+  Object.entries(ACHIEVEMENTS).forEach(([id, achievement]) => {
+    const isUnlocked = unlocked.includes(id);
+    const row = document.createElement('div');
+    row.className = 'badge-row' + (isUnlocked ? ' unlocked' : '');
+    const icon = document.createElement('span');
+    icon.className = 'badge-icon';
+    icon.textContent = isUnlocked ? achievement.icon : '🔒';
+    const info = document.createElement('div');
+    info.className = 'badge-info';
+    const name = document.createElement('b');
+    name.textContent = achievement.name;
+    const desc = document.createElement('small');
+    desc.textContent = achievement.desc;
+    info.appendChild(name); info.appendChild(document.createElement('br')); info.appendChild(desc);
+    row.appendChild(icon); row.appendChild(info);
+    list.appendChild(row);
+  });
+  document.getElementById('achievementSummary').textContent = unlocked.length + '/' + Object.keys(ACHIEVEMENTS).length + ' lencana terbuka';
+}
+function updateMenuInfo() {
+  const leaderboard = loadLeaderboard();
+  const best = leaderboard[0] || null;
+  const bestScore = best && Number.isFinite(Number(best.score)) ? Number(best.score) : 0;
+  const bestScoreLine = document.getElementById('bestScoreLine');
+  if (bestScoreLine) {
+    bestScoreLine.textContent = best
+      ? '🏅 Rekor: ' + bestScore.toLocaleString('id-ID') + ' — ' + best.username
+      : '🏅 Belum ada rekor. Jadilah yang pertama!';
+  }
+  const unlockedCount = loadAchievements().length;
+  const btn = document.getElementById('btnAchievements');
+  if (btn) btn.textContent = 'Lencana (' + unlockedCount + '/' + Object.keys(ACHIEVEMENTS).length + ')';
 }
 function saveUsername() {
   const input = document.getElementById('usernameInput');
@@ -1004,6 +1161,9 @@ function loop(timestamp) {
 
 /* INIT */
 setState(STATE_MENU);
+updateHUD();
+updateMenuInfo();
+applyAudioSettings();
 document.getElementById('usernameInput').value = playerName || '';
 buildCharacterCards();
 renderLeaderboard();
