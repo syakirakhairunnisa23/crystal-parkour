@@ -15,9 +15,9 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 - **Kebijakan Caching**: Zero-Cache (`no-cache, no-store, must-revalidate`)
 - **Deployment**: GitHub Pages (Branch `main`, path `/`)
 - **URL Live**: https://syakirakhairunnisa23.github.io/crystal-parkour/
-- **Karakter**: 3 hewan pilihan dengan statistik dan dunia berbeda — Kucing Oren (seimbang/padang rumput), Kelinci Salju (lompat tinggi/hutan sakura), Rubah Api (lari cepat/senja).
+- **Karakter**: 3 hewan pilihan dengan statistik, kemampuan khas, dan dunia berbeda — Kucing Oren (seimbang, Cakar Dinding), Kelinci Salju (lompat tinggi, Lompat Tiga), Rubah Api (lari cepat, Dash Api).
 - **Konsep**: Hewan pilihan pemain menjelajahi pulau terapung untuk mengumpulkan kristal. Setelah kristal terkumpul, boss penjaga muncul dan wajib dikalahkan sebelum ke pulau berikutnya. Mekanik: lari, lompat, lompat ganda, hindari duri dan biji pohon yang jatuh dengan peringatan.
-- **Status Saat Ini**: Playable end-to-end (menu -> pilih karakter -> 3 pulau + 3 boss -> kemenangan), leaderboard Top 10 aktif, audio sintetis dengan pengaturan mute/volume, partikel, layar jeda, kontrol sentuh ◀ ▶ untuk HP, tombol JEDA di HUD, skor anti-farm (checkpoint per pulau), rekor terbaik di menu, dan 5 lencana prestasi.
+- **Status Saat Ini**: Playable end-to-end (menu -> pilih karakter -> 3 pulau + 3 boss -> kemenangan), leaderboard Top 10 aktif, audio sintetis dengan pengaturan mute/volume, partikel, layar jeda, kontrol sentuh ◀ ▶ untuk HP, tombol JEDA di HUD, skor anti-farm (checkpoint per pulau), rekor terbaik di menu, 5 lencana prestasi, kemampuan khas tiap karakter, rating bintang 1–3, serta simpan progres dengan tombol "Lanjutkan".
 
 ---
 
@@ -54,6 +54,9 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 - [x] Hujan biji pohon diberi peringatan (marker segitiga + garis putus-putus) sebelum jatuh, dengan jeda dan kecepatan yang meningkat per level.
 - [x] Anti-farm skor: skor tiap pulau di-checkpoint (`levelEntryScore`) dan dikembalikan saat "Coba Lagi", sehingga kristal tidak bisa ditumpuk dengan sengaja mati.
 - [x] Pulau Awal dijadikan tutorial tanpa duri (duri mulai Pulau 2) agar pemain baru tidak langsung mati 65 px dari titik spawn.
+- [x] Kemampuan khas karakter: Kucing (wall slide + wall jump), Kelinci (lompat tiga), Rubah (dash + imun proyektil saat dash).
+- [x] Rating bintang 1–3 per pulau (selesai, tanpa mati, selesai < 45 detik) dengan penyimpanan bintang terbaik.
+- [x] Simpan progres `arcade_progress` (pulau terbuka + bintang) dan tombol "Lanjutkan" di menu utama.
 
 ### Phase 4: Efek Suara & Visual Juice
 - [x] Efek suara arcade sintetis dengan Web Audio API (lompat, lompat ganda, kristal, tabrakan, injak boss, level selesai, game over).
@@ -96,6 +99,9 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 | **T-13** | Rekor Terbaik di Menu Utama | Phase 2 | `DONE` | AI | Dibaca dari Top 10, format angka `id-ID` |
 | **T-14** | Lencana Prestasi & Toast | Phase 4 | `DONE` | AI | 5 lencana, overlay daftar, `arcade_achievements` |
 | **T-15** | Tuning Pulau Awal & HUD Init | Phase 3 | `DONE` | AI | Duri dekat spawn dihapus; HUD terisi 0/4 saat init |
+| **T-16** | Kemampuan Khas 3 Karakter | Phase 3 | `DONE` | AI | Kucing wall jump, Kelinci lompat tiga, Rubah dash + imun proyektil |
+| **T-17** | Rating Bintang 1–3 per Pulau | Phase 4 | `DONE` | AI | Selesai / tanpa mati / < 45 detik; bintang terbaik disimpan |
+| **T-18** | Simpan Progres & Tombol Lanjutkan | Phase 2 | `DONE` | AI | `arcade_progress` (pulau terbuka + bintang), mulai langsung di pulau terakhir |
 
 *Status: `TODO` | `IN-PROGRESS` | `DONE`*
 
@@ -105,6 +111,7 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 
 | Versi | Tanggal | Pelaksana | Ringkasan Perubahan | Referensi Commit |
 | :--- | :--- | :--- | :--- | :--- |
+| **v0.7.0** | 2026-11-07 | AI | Menambahkan kemampuan khas tiap karakter (Kucing: cakar dinding + wall jump; Kelinci: lompat tiga; Rubah: dash dengan imun proyektil dan cooldown), rating bintang 1–3 per pulau dengan bintang terbaik tersimpan, serta progres `arcade_progress` dan tombol "Lanjutkan" yang memulai langsung di pulau terakhir; tombol DASH muncul di layar sentuh khusus Rubah | `d177818` |
 | **v0.6.0** | 2026-11-07 | AI | Menambahkan pengaturan suara (mute + slider volume, tersimpan di `arcade_settings`), rekor terbaik di menu utama, dan 5 lencana prestasi dengan toast saat terbuka (`arcade_achievements`); Pulau Awal dibuat tanpa duri dekat spawn, HUD terisi saat init, serta tata letak menu dipadatkan agar tidak terpotong (diverifikasi via screenshot headless) | `8fec671` |
 | **v0.5.0** | 2026-11-07 | AI | Menambahkan tombol arah sentuh ◀ ▶ (tahan untuk bergerak) dan tombol LOMPAT yang dirapikan, tombol JEDA di HUD untuk desktop & HP, serta menutup celah farm skor dengan checkpoint skor per pulau (`levelEntryScore`) agar kristal tidak bisa ditumpuk lewat "Coba Lagi"; pesan game over kini menjelaskan pengembalian skor | `db125cd` |
 | **v0.4.1** | 2026-11-07 | AI | Perbaikan encoding `PLAN.md` ke UTF-8 dan penambahan `.nojekyll` agar build GitHub Pages tidak lagi diproses Jekyll; deploy diverifikasi cocok dengan file lokal | `c605073` |
