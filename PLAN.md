@@ -93,6 +93,7 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 
 | Versi | Tanggal | Pelaksana | Ringkasan Perubahan | Referensi Commit |
 | :--- | :--- | :--- | :--- | :--- |
+| **v0.4.1** | 2026-11-07 | AI | Perbaikan encoding `PLAN.md` ke UTF-8 dan penambahan `.nojekyll` agar build GitHub Pages tidak lagi diproses Jekyll; deploy diverifikasi cocok dengan file lokal | `c605073` |
 | **v0.4.0** | 2026-11-07 | AI | Menambahkan 3 karakter hewan pilihan (Kucing/Kelinci/Rubah) dengan statistik & tema latar berbeda, layar pemilihan karakter berpratinjau, boss penjaga di akhir setiap pulau (HP bar, lompatan, proyektil, injak kepala, retry boss), penataan ulang platform sesuai jangkauan lompat, serta peringatan visual sebelum biji pohon jatuh dengan kesulitan bertingkat | `e002f26` |
 | **v0.3.1** | 2026-10-31 | AI | Publikasi repository publik `crystal-parkour`, aktivasi GitHub Pages dari branch `main` root `/`, build sukses, dan verifikasi live site (status `built`, halaman memuat game) | `48c2a51` |
 | **v0.3.0** | 2026-10-31 | AI | Perbaikan total `index.html`: struktur duplikat yang menyebabkan `SyntaxError` dibersihkan, input lompat keyboard (Spasi/atas/W) diperbaiki, lompat ganda + coyote time, layar jeda (P/Esc), partikel & screen shake, HUD/kanvas responsif, tombol sentuh berbasis pointer, skor disimpan saat game over & kemenangan tanpa duplikasi run, serta sanitasi leaderboard lebih ketat | `9493795` |
