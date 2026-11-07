@@ -11,7 +11,7 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 - **Format**: Single-File HTML (`index.html`) tanpa dependensi eksternal
 - **Platform**: Web Browser (Desktop & Mobile Responsive)
 - **Audio**: Web Audio API Sintetis
-- **Penyimpanan**: LocalStorage (`arcade_leaderboard`, `arcade_last_username`, `arcade_character`)
+- **Penyimpanan**: LocalStorage (`arcade_leaderboard`, `arcade_last_username`, `arcade_character`, `arcade_settings`, `arcade_achievements`, `arcade_progress`)
 - **Kebijakan Caching**: Zero-Cache (`no-cache, no-store, must-revalidate`)
 - **Deployment**: GitHub Pages (Branch `main`, path `/`)
 - **URL Live**: https://syakirakhairunnisa23.github.io/crystal-parkour/
