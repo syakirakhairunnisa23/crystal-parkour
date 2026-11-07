@@ -1,4 +1,4 @@
-# PLAN.md — Universal 2D Arcade Game Roadmap (Untuk Siswa)
+# PLAN.md â€” Universal 2D Arcade Game Roadmap (Untuk Siswa)
 
 Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan game arcade 2D dalam 1 file `index.html`. Dokumen ini diperbarui secara otomatis oleh AI setiap kali ada perubahan kode sebelum push ke GitHub.
 
@@ -15,7 +15,7 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 - **Kebijakan Caching**: Zero-Cache (`no-cache, no-store, must-revalidate`)
 - **Deployment**: GitHub Pages (Branch `main`, path `/`)
 - **URL Live**: https://syakirakhairunnisa23.github.io/crystal-parkour/
-- **Karakter**: 3 hewan pilihan dengan statistik dan dunia berbeda — Kucing Oren (seimbang/padang rumput), Kelinci Salju (lompat tinggi/hutan sakura), Rubah Api (lari cepat/senja).
+- **Karakter**: 3 hewan pilihan dengan statistik dan dunia berbeda â€” Kucing Oren (seimbang/padang rumput), Kelinci Salju (lompat tinggi/hutan sakura), Rubah Api (lari cepat/senja).
 - **Konsep**: Hewan pilihan pemain menjelajahi pulau terapung untuk mengumpulkan kristal. Setelah kristal terkumpul, boss penjaga muncul dan wajib dikalahkan sebelum ke pulau berikutnya. Mekanik: lari, lompat, lompat ganda, hindari duri dan biji pohon yang jatuh dengan peringatan.
 - **Status Saat Ini**: Playable end-to-end (menu -> pilih karakter -> 3 pulau + 3 boss -> kemenangan), leaderboard Top 10 aktif, audio sintetis, partikel, layar jeda.
 
@@ -93,7 +93,7 @@ Dokumen ini adalah rencana kerja universal dan log perkembangan proyek pembuatan
 
 | Versi | Tanggal | Pelaksana | Ringkasan Perubahan | Referensi Commit |
 | :--- | :--- | :--- | :--- | :--- |
-| **v0.4.0** | 2026-11-07 | AI | Menambahkan 3 karakter hewan pilihan (Kucing/Kelinci/Rubah) dengan statistik & tema latar berbeda, layar pemilihan karakter berpratinjau, boss penjaga di akhir setiap pulau (HP bar, lompatan, proyektil, injak kepala, retry boss), penataan ulang platform sesuai jangkauan lompat, serta peringatan visual sebelum biji pohon jatuh dengan kesulitan bertingkat | `PENDING` |
+| **v0.4.0** | 2026-11-07 | AI | Menambahkan 3 karakter hewan pilihan (Kucing/Kelinci/Rubah) dengan statistik & tema latar berbeda, layar pemilihan karakter berpratinjau, boss penjaga di akhir setiap pulau (HP bar, lompatan, proyektil, injak kepala, retry boss), penataan ulang platform sesuai jangkauan lompat, serta peringatan visual sebelum biji pohon jatuh dengan kesulitan bertingkat | `e002f26` |
 | **v0.3.1** | 2026-10-31 | AI | Publikasi repository publik `crystal-parkour`, aktivasi GitHub Pages dari branch `main` root `/`, build sukses, dan verifikasi live site (status `built`, halaman memuat game) | `48c2a51` |
 | **v0.3.0** | 2026-10-31 | AI | Perbaikan total `index.html`: struktur duplikat yang menyebabkan `SyntaxError` dibersihkan, input lompat keyboard (Spasi/atas/W) diperbaiki, lompat ganda + coyote time, layar jeda (P/Esc), partikel & screen shake, HUD/kanvas responsif, tombol sentuh berbasis pointer, skor disimpan saat game over & kemenangan tanpa duplikasi run, serta sanitasi leaderboard lebih ketat | `9493795` |
 | **v0.2.2** | 2026-10-24 | AI | Menambahkan panduan alur integrasi khusus Google AI Studio & penegasan repo wajib Public | `07475fb` |
